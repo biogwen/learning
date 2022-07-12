@@ -1,36 +1,23 @@
+use std::io;
+use rand::Rng;
+use std::cmp::Ordering;
 
-
-struct bird {
-    name: String,
-    age: u32,
-    size: String
-}
-
-impl bird {
-    fn print_name(&self) {
-        println!("{}", self.name);
-    }
-}
-
-fn first <T> (slice: &[T]) -> &T {
-    &slice[0]
-}
-
-impl dinosaurs for bird {
-    fn can_fly(&self) -> bool {
-        true
-    }
-}
 fn main() {
-    let birdy = bird { name: "birdy".to_string(), age: 25, size: "small".to_string() };
-    birdy.print_name();
-    print!("{}", birdy.age);
 
-}
-trait dinosaurs {
-    fn can_kill_you(&self) -> bool {
-        true
+    let secret_number = rand::thread_rng().gen_range(1, 101);
+    println!("The secret number is: {}", secret_number);
+    println!("Guess a number");
+    println!("Please input your number:");
+
+    let mut guess = String::new();
+    
+    io::stdin().read_line(&mut guess)
+        .expect("failed to read the line");
+    let guess: u32 = guess.trim().parse().expect("failed to parse");
+    println!("you guessed {}", guess);
+    match guess.cmp(&secret_number) {
+        Ordering::Less =>println!("too low"),
+        Ordering::Greater =>println!("too high"),
+        Ordering::Equal =>println!("Good job"),
     }
-    fn can_fly(&self) -> bool;
-
 }
